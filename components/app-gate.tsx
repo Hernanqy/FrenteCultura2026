@@ -1,0 +1,60 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import type { Session } from "@supabase/supabase-js";
+import { supabase } from "@/lib/supabase";
+import { Dashboard } from "./dashboard";
+
+export function AppGate() {
+  const [session, setSession] = useState<Session | null>(null);
+  const [checking, setChecking] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [sending, setSending] = useState(false);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      setChecking(false);
+    });
+    const { data } = supabase.auth.onAuthStateChange((_event, next) => setSession(next));
+    return () => data.subscription.unsubscribe();
+  }, []);
+
+  async function login(event: React.FormEvent) {
+    event.preventDefault();
+    setSending(true);
+    setError("");
+    const { error: loginError } = await supabase.auth.signInWithPassword({ email, password });
+    if (loginError) setError("No se pudo ingresar. Revisá el correo y la contraseña.");
+    setSending(false);
+  }
+
+  if (checking) return <div className="center-screen"><div className="loader" /></div>;
+  if (session) return <Dashboard userEmail={session.user.email ?? ""} />;
+
+  return (
+    <main className="login-page">
+      <section className="login-brand">
+        <div className="brand-mark large">FC</div>
+        <p className="eyebrow light">ORGANIZACIÓN Y SEGUIMIENTO</p>
+        <h1>Frente Cultura</h1>
+        <p>Un espacio compartido para coordinar el equipo, registrar el trabajo territorial y seguir cada meta.</p>
+      </section>
+      <section className="login-card">
+        <div>
+          <p className="eyebrow">ACCESO AL EQUIPO</p>
+          <h2>Ingresar</h2>
+          <p className="muted">Usá la cuenta habilitada por la coordinación.</p>
+        </div>
+        <form onSubmit={login}>
+          <label>Correo<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></label>
+          <label>Contraseña<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required /></label>
+          {error && <p className="form-error">{error}</p>}
+          <button className="primary wide" disabled={sending}>{sending ? "Ingresando…" : "Ingresar"}</button>
+        </form>
+      </section>
+    </main>
+  );
+}

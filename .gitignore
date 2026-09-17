@@ -1,0 +1,15 @@
+﻿# Next.js
+.next/
+node_modules/
+
+# Variables privadas
+.env.local
+.env*.local
+
+# Archivos temporales
+*.log
+*.rar
+*.zip
+
+# Backups
+respaldo-*/

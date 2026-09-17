@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Frente Cultura",
-  description: "OrganizaciÃ³n y seguimiento del Frente Cultura",
+  description: "Organización y seguimiento del Frente Cultura",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

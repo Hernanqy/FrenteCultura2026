@@ -25,7 +25,7 @@ import type { Activity, Contact, Entity, EntityKind, Member, Task } from "@/type
 type View = "inicio" | "equipo" | "plan" | "actividades" | "registro" | "indicadores" | "mapa";
 const WORKSPACE_ID = "00000000-0000-4000-8000-000000000001";
 const phases = {
-  1: { name: "Constitución", dates: "Oct. y nov. 2026" },
+  1: { name: "ConstituciÃ³n", dates: "Oct. y nov. 2026" },
   2: { name: "Despliegue", dates: "Dic. 2026 a mar. 2027" },
   3: { name: "MasificaciÃ³n", dates: "Abr. a jul. 2027" },
 };
@@ -162,7 +162,7 @@ function HomeView({ members, tasks, activities, contacts, stats, toggleTask, nav
     { view: "plan", title: "Plan de trabajo", detail: "Fases, acciones y seguimiento", value: `${stats.completed}/${tasks.length} completadas`, icon: <ClipboardList /> },
     { view: "actividades", title: "Actividades", detail: "Agenda, asistencia y adherentes", value: `${activities.length} cargadas`, icon: <CalendarDays /> },
     { view: "registro", title: "Registro cultural", detail: "Artistas, espacios y organizaciones", value: `${contacts.length} mapeados`, icon: <ContactRound /> },
-    { view: "indicadores", title: "Indicadores", detail: "Metas y evolución del trabajo", value: `${stats.adherents} adherentes`, icon: <ChartNoAxesCombined /> },
+    { view: "indicadores", title: "Indicadores", detail: "Metas y evoluciÃ³n del trabajo", value: `${stats.adherents} adherentes`, icon: <ChartNoAxesCombined /> },
     { view: "mapa", title: "Mapa cultural", detail: "Organizaciones culturales de OlavarrÃ­a", value: `${contacts.length} registros`, icon: <MapPinned /> },
   ];
 
@@ -170,7 +170,7 @@ function HomeView({ members, tasks, activities, contacts, stats, toggleTask, nav
     <section className="home-intro">
       <div>
         <p className="kicker">PANEL GENERAL</p>
-        <h2>¿Qué querés gestionar?</h2>
+        <h2>ï¿½??QuÃ© querÃ©s gestionar?</h2>
         <p>Entrá directamente a cada sección del Frente Cultura.</p>
       </div>
     </section>
@@ -189,10 +189,10 @@ function HomeView({ members, tasks, activities, contacts, stats, toggleTask, nav
       ))}
     </section>
 
-    <section className="phase-banner"><div><span>FASE ACTUAL</span><h2>Constitución</h2><p>Octubre y noviembre de 2026</p></div><div className="phase-count"><strong>{phaseOne.filter((t) => t.done).length}/{phaseOne.length}</strong><small>acciones completadas</small></div></section>
+    <section className="phase-banner"><div><span>FASE ACTUAL</span><h2>ConstituciÃ³n</h2><p>Octubre y noviembre de 2026</p></div><div className="phase-count"><strong>{phaseOne.filter((t) => t.done).length}/{phaseOne.length}</strong><small>acciones completadas</small></div></section>
     <section className="metrics-grid"><Metric label="Integrantes" value={members.length} detail="Equipo inicial" /><Metric label="Mapeados" value={contacts.length} detail="Meta: 40 a noviembre" /><Metric label="Actividades" value={activities.length} detail="Meta: una por mes" /><Metric label="Adherentes" value={stats.adherents} detail="Meta: 150 a julio" /></section>
     <section className="grid-2">
-      <article className="panel"><p className="kicker">PRÃ“XIMOS PASOS</p><h2>Acciones prioritarias</h2>{phaseOne.filter((t) => !t.done).map((t) => <label className="task-row" key={t.id}><input type="checkbox" checked={t.done} onChange={() => toggleTask(t)} /><span><b>{t.title}</b><small>Fase 1 Â· Constitución</small></span></label>)}</article>
+      <article className="panel"><p className="kicker">PRÃ“XIMOS PASOS</p><h2>Acciones prioritarias</h2>{phaseOne.filter((t) => !t.done).map((t) => <label className="task-row" key={t.id}><input type="checkbox" checked={t.done} onChange={() => toggleTask(t)} /><span><b>{t.title}</b><small>Fase 1 Â· ConstituciÃ³n</small></span></label>)}</article>
       <article className="panel"><p className="kicker">AGENDA</p><h2>PrÃ³ximas actividades</h2>{activities.map((a) => <div className="event-row" key={a.id}><time>{new Date(a.activity_date + "T12:00:00").getDate()}<small>{new Date(a.activity_date + "T12:00:00").toLocaleDateString("es-AR", { month: "short" }).replace(".", "")}</small></time><span><b>{a.name}</b><small>{a.place} Â· {a.status}</small></span></div>)}</article>
     </section>
   </>;

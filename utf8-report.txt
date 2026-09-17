@@ -1,0 +1,62 @@
+components\dashboard-antes-texto-fix.tsx:96
+if (!window.confirm("�??Eliminar este registro?")) return;
+
+components\dashboard-antes-texto-fix.tsx:173
+<h2>�??Qué querés gestionar?</h2>
+
+components\dashboard.tsx:30
+3: { name: "MasificaciÃ³n", dates: "Abr. a jul. 2027" },
+
+components\dashboard.tsx:32
+const roles = ["Sin designar", "CoordinaciÃ³n", "Co-coordinaciÃ³n", "Enlace OrganizaciÃ³n", "Enlace FormaciÃ³n", "Enlace ComunicaciÃ³n", "Responsable de Registro"];
+
+components\dashboard.tsx:103
+const addLabel = { member: "Integrante", task: "AcciÃ³n", activity: "Actividad", contact: "Contacto" }[addKind];
+
+components\dashboard.tsx:109
+<div className="brand"><span className="brand-mark">FC</span><div><strong>Frente Cultura</strong><small>OrganizaciÃ³n y seguimiento</small></div></div>
+
+components\dashboard.tsx:124
+<button className="menu-btn" onClick={() => setMenuOpen(!menuOpen)} aria-label="Abrir menÃº"><Menu /></button>
+
+components\dashboard.tsx:166
+{ view: "mapa", title: "Mapa cultural", detail: "Organizaciones culturales de OlavarrÃ­a", value: `${contacts.length} registros`, icon: <MapPinned /> },
+
+components\dashboard.tsx:178
+<section className="section-menu" aria-label="Secciones de la aplicaciÃ³n">
+
+components\dashboard.tsx:195
+<article className="panel"><p className="kicker">PRÃ“XIMOS PASOS</p><h2>Acciones prioritarias</h2>{phaseOne.filter((t) => !t.done).map((t) => <label className="task-row" key={t.id}><input type="checkbox" checked={t.done} onChange={() => toggleTask(t)} /><span><b>{t.title}</b><small>Fase 1 Â· Constitución</small></span></label>)}</article>
+
+components\dashboard.tsx:196
+<article className="panel"><p className="kicker">AGENDA</p><h2>PrÃ³ximas actividades</h2>{activities.map((a) => <div className="event-row" key={a.id}><time>{new Date(a.activity_date + "T12:00:00").getDate()}<small>{new Date(a.activity_date + "T12:00:00").toLocaleDateString("es-AR", { month: "short" }).replace(".", "")}</small></time><span><b>{a.name}</b><small>{a.place} Â· {a.status}</small></span></div>)}</article>
+
+components\dashboard.tsx:202
+return <><Intro overline={String(members.length) + " INTEGRANTES"} title="DefiniciÃ³n de responsabilidades" /><div className="role-grid">{roles.slice(1).map((role) => <article key={role}><b>{role}</b><span>{members.filter((m) => m.role === role).length} designado(s)</span></article>)}</div><Table heads={["Integrante", "Rol asignado", "Base", ""]}>{members.map((m) => <tr key={m.id}><td><Avatar name={m.name} /> <b>{m.name}</b></td><td><span className="badge">{m.role}</span></td><td>{m.base ? String(m.base) + " base" : "â€”"}</td><td><Actions edit={() => edit(m)} remove={() => remove("member", m.id)} /></td></tr>)}</Table></>;
+
+components\dashboard.tsx:206
+return <><Intro overline="OCTUBRE 2026 â€” JULIO 2027" title="Programa de trabajo" /><div className="phase-grid">{Object.entries(phases).map(([number, phase]) => <article className="phase-card" key={number}><header><p className="kicker">FASE {number}</p><h2>{phase.name}</h2><span>{phase.dates}</span></header>{tasks.filter((t) => t.phase === Number(number)).map((t) => <div className={"plan-task " + (t.done ? "done" : "")} key={t.id}><input type="checkbox" checked={t.done} onChange={() => toggleTask(t)} /><span>{t.title}</span><Actions edit={() => edit(t)} remove={() => remove("task", t.id)} compact /></div>)}</article>)}</div></>;
+
+components\dashboard.tsx:210
+return <><Intro overline="AGENDA, ASISTENCIA Y CONVERSIÃ“N" title="Actividades" /><Table heads={["Actividad", "Fecha", "Barrio / lugar", "Asistentes", "Adherentes", "Estado", ""]}>{activities.map((a) => <tr key={a.id}><td><b>{a.name}</b></td><td>{new Date(a.activity_date + "T12:00:00").toLocaleDateString("es-AR")}</td><td>{a.place}</td><td>{a.attendees}</td><td>{a.adherents}</td><td><span className={"badge " + (a.status === "Realizada" ? "green" : "amber")}>{a.status}</span></td><td><Actions edit={() => edit(a)} remove={() => remove("activity", a.id)} /></td></tr>)}</Table></>;
+
+components\dashboard.tsx:214
+return <><Intro overline="ARTISTAS, ESPACIOS, AGRUPACIONES Y COLECTIVIDADES" title="Registro cultural" /><div className="search-box"><Search /><input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar por nombre, disciplina o barrioâ€¦" /></div><div className="contact-grid">{contacts.length ? contacts.map((c) => <article className="contact-card" key={c.id}><header><div><h3>{c.name}</h3><span className="badge">{c.type}</span></div><Actions edit={() => edit(c)} remove={() => remove("contact", c.id)} compact /></header><p><b>{c.discipline || "Actividad sin especificar"}</b></p><p>{[c.address, c.neighborhood].filter(Boolean).join(" Â· ") || "UbicaciÃ³n sin especificar"}</p><footer>{c.phone || "Sin telÃ©fono"}{c.sustained && <span className="badge green">ParticipaciÃ³n sostenida</span>}</footer></article>) : <div className="panel empty">TodavÃ­a no hay contactos cargados.</div>}</div></>;
+
+components\dashboard.tsx:220
+return <><Intro overline="RESULTADOS Y METAS ACUMULADAS" title="Indicadores" /><section className="metrics-grid"><Metric label="Asistentes" value={stats.attendees} detail="Total acumulado" /><Metric label="Adherentes" value={stats.adherents} detail="Contactos convertidos" /><Metric label="ConversiÃ³n" value={stats.attendees ? String(Math.round(stats.adherents / stats.attendees * 100)) + "%" : "0%"} detail="Adherentes / asistentes" /><Metric label="ParticipaciÃ³n sostenida" value={sustained} detail="Espacios y organizaciones" /></section><article className="panel goals"><p className="kicker">AVANCE DE METAS</p><h2>Objetivos a julio de 2027</h2>{goals.map(([label, value, target]) => <div className="goal" key={label}><div><b>{label}</b><span>{value} / {target}</span></div><progress value={value} max={target} /></div>)}</article></>;
+
+components\dashboard.tsx:225
+<Intro overline="MAPA TERRITORIAL" title="Mapa cultural de OlavarrÃ­a" />
+
+components\dashboard.tsx:249
+const labels = { member: "integrante", task: "acciÃ³n", activity: "actividad", contact: "contacto" };
+
+components\dashboard.tsx:277
+{kind === "task" && <><Field label="AcciÃ³n" name="title" value={values?.title} required wide /><Select label="Fase" name="phase" value={values?.phase} options={["1", "2", "3"]} /></>}
+
+components\dashboard.tsx:279
+{kind === "contact" && <><Field label="Nombre" name="name" value={values?.name} required wide /><Select label="Tipo" name="type" value={values?.type} options={["Artista", "Espacio cultural", "OrganizaciÃ³n cultural", "AgrupaciÃ³n", "Colectividad", "PeÃ±a"]} /><Field label="Disciplina / actividad" name="discipline" value={values?.discipline} /><Field label="Barrio" name="neighborhood" value={values?.neighborhood} /><Field label="DirecciÃ³n" name="address" value={values?.address} wide /><Field label="TelÃ©fono o contacto" name="phone" value={values?.phone} /><Field label="Latitud" name="latitude" type="number" step="any" value={values?.latitude} /><Field label="Longitud" name="longitude" type="number" step="any" value={values?.longitude} /><p className="field-help wide-field">PodÃ©s dejar latitud y longitud vacÃ­as y ubicar el registro directamente haciendo clic en el Mapa cultural.</p><label className="check"><input type="checkbox" name="sustained" defaultChecked={Boolean(values?.sustained)} /> ParticipaciÃ³n sostenida</label></>}
+
+components\dashboard.tsx:280
+</div><footer><button className="secondary" type="button" onClick={close}>Cancelar</button><button className="primary" disabled={busy}>{busy ? "Guardandoâ€¦" : "Guardar"}</button></footer></form></div>;

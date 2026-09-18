@@ -121,6 +121,34 @@ export function Dashboard({ userEmail }: { userEmail: string }) {
 
       <main className="main">
         <header className="topbar">
+            {view !== "inicio" && (
+              <button
+                type="button"
+                onClick={() => {
+                  setView("inicio");
+                  setMenuOpen(false);
+                }}
+                aria-label="Volver al inicio"
+                style={{
+                  width: 40,
+                  height: 40,
+                  minWidth: 40,
+                  borderRadius: "50%",
+                  border: "1px solid #d8d4e5",
+                  background: "#ffffff",
+                  color: "#17182b",
+                  fontSize: 21,
+                  fontWeight: 800,
+                  cursor: "pointer",
+                  boxShadow: "0 5px 15px rgba(0,0,0,.08)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                ←
+              </button>
+            )}
           <button className="menu-btn" onClick={() => setMenuOpen(!menuOpen)} aria-label="Abrir menÃº"><Menu /></button>
           <div><p className="eyebrow">FRENTE CULTURA</p><h1>{titleFor(view)}</h1></div>
           {!["inicio", "indicadores"].includes(view) && <button className="primary" onClick={() => setEditor({ kind: addKind })}><Plus /> Nuevo {addLabel.toLowerCase()}</button>}

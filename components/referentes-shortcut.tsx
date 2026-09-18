@@ -13,6 +13,8 @@ export function ReferentesShortcut() {
   const pathname = usePathname();
   const router = useRouter();
 
+  const isDashboard = pathname === "/";
+
   function volver() {
     const rutaActual = window.location.pathname;
 
@@ -32,6 +34,7 @@ export function ReferentesShortcut() {
 
   return (
     <>
+      {!isDashboard && (
       <button
         className="global-back-button"
         type="button"
@@ -59,6 +62,7 @@ export function ReferentesShortcut() {
       >
         ←
       </button>
+      )}
 
       <nav
         className="global-quick-nav"

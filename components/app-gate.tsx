@@ -90,11 +90,7 @@ export function AppGate() {
 
         <h1>Frente Cultura</h1>
 
-        <p>
-          {
-            "Un espacio compartido para coordinar el equipo, registrar el trabajo territorial y seguir cada meta."
-          }
-        </p>
+        
       </section>
 
       <section className="login-card">

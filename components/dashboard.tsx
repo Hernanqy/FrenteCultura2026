@@ -198,8 +198,7 @@ function HomeView({ members, tasks, activities, contacts, stats, toggleTask, nav
     <section className="home-intro">
       <div>
         <p className="kicker">PANEL GENERAL</p>
-        <h2>¿Qué querés gestionar?</h2>
-        <p>Entrá directamente a cada sección del Frente Cultura.</p>
+      
       </div>
     </section>
 
@@ -220,14 +219,14 @@ function HomeView({ members, tasks, activities, contacts, stats, toggleTask, nav
     <section className="phase-banner"><div><span>FASE ACTUAL</span><h2>Constitución</h2><p>Octubre y noviembre de 2026</p></div><div className="phase-count"><strong>{phaseOne.filter((t) => t.done).length}/{phaseOne.length}</strong><small>acciones completadas</small></div></section>
     <section className="metrics-grid"><Metric label="Integrantes" value={members.length} detail="Equipo inicial" /><Metric label="Mapeados" value={contacts.length} detail="Meta: 40 a noviembre" /><Metric label="Actividades" value={activities.length} detail="Meta: una por mes" /><Metric label="Adherentes" value={stats.adherents} detail="Meta: 150 a julio" /></section>
     <section className="grid-2">
-      <article className="panel"><p className="kicker">PRÃ“XIMOS PASOS</p><h2>Acciones prioritarias</h2>{phaseOne.filter((t) => !t.done).map((t) => <label className="task-row" key={t.id}><input type="checkbox" checked={t.done} onChange={() => toggleTask(t)} /><span><b>{t.title}</b><small>Fase 1 Â· Constitución</small></span></label>)}</article>
+      <article className="panel"><p className="kicker">PROXIMOS PASOS</p><h2>Acciones prioritarias</h2>{phaseOne.filter((t) => !t.done).map((t) => <label className="task-row" key={t.id}><input type="checkbox" checked={t.done} onChange={() => toggleTask(t)} /><span><b>{t.title}</b><small>Fase 1 Â· Constitución</small></span></label>)}</article>
       <article className="panel"><p className="kicker">AGENDA</p><h2>Próximas actividades</h2>{activities.map((a) => <div className="event-row" key={a.id}><time>{new Date(a.activity_date + "T12:00:00").getDate()}<small>{new Date(a.activity_date + "T12:00:00").toLocaleDateString("es-AR", { month: "short" }).replace(".", "")}</small></time><span><b>{a.name}</b><small>{a.place} Â· {a.status}</small></span></div>)}</article>
     </section>
   </>;
 }
 
 function TeamView({ members, edit, remove }: { members: Member[]; edit: (m: Member) => void; remove: (k: EntityKind, id: number) => void }) {
-  return <><Intro overline={String(members.length) + " INTEGRANTES"} title="DefiniciÃ³n de responsabilidades" /><div className="role-grid">{roles.slice(1).map((role) => <article key={role}><b>{role}</b><span>{members.filter((m) => m.role === role).length} designado(s)</span></article>)}</div><Table heads={["Integrante", "Rol asignado", "Base", ""]}>{members.map((m) => <tr key={m.id}><td><Avatar name={m.name} /> <b>{m.name}</b></td><td><span className="badge">{m.role}</span></td><td>{m.base ? String(m.base) + " base" : "â€”"}</td><td><Actions edit={() => edit(m)} remove={() => remove("member", m.id)} /></td></tr>)}</Table></>;
+  return <><Intro overline={String(members.length) + " INTEGRANTES"} title="DefiniciÃ³n de responsabilidades" /><div className="role-grid">{roles.slice(1).map((role) => <article key={role}><b>{role}</b><span>{members.filter((m) => m.role === role).length} designado(s)</span></article>)}</div><Table heads={["Integrante", "Rol asignado", ""]}>{members.map((m) => <tr key={m.id}><td><Avatar name={m.name} /> <b>{m.name}</b></td><td><span className="badge">{m.role}</span></td><td><Actions edit={() => edit(m)} remove={() => remove("member", m.id)} /></td></tr>)}</Table></>;
 }
 
 function PlanView({ tasks, toggleTask, edit, remove }: { tasks: Task[]; toggleTask: (t: Task) => void; edit: (t: Task) => void; remove: (k: EntityKind, id: number) => void }) {
@@ -280,7 +279,7 @@ function Editor({ kind, item, close, saved, error }: { kind: EntityKind; item?: 
     setBusy(true);
     const data = new FormData(event.currentTarget);
     const payload: Record<string, string | number | boolean | null> = { workspace_id: WORKSPACE_ID };
-    if (kind === "member") Object.assign(payload, { name: data.get("name") as string, base: Number(data.get("base")) || 0, role: data.get("role") as string });
+    if (kind === "member") Object.assign(payload, { name: data.get("name") as string, role: data.get("role") as string });
     if (kind === "task") Object.assign(payload, { title: data.get("title") as string, phase: Number(data.get("phase")), done: values?.done ?? false });
     if (kind === "activity") Object.assign(payload, { name: data.get("name") as string, activity_date: data.get("activity_date") as string, place: data.get("place") as string, attendees: Number(data.get("attendees")) || 0, adherents: Number(data.get("adherents")) || 0, status: data.get("status") as string });
     if (kind === "contact") Object.assign(payload, {
@@ -301,7 +300,7 @@ function Editor({ kind, item, close, saved, error }: { kind: EntityKind; item?: 
     if (saveError) error(saveError.message); else saved();
   }
   return <div className="modal-backdrop" onMouseDown={(e) => { if (e.target === e.currentTarget) close(); }}><form className="editor" onSubmit={submit}><header><div><p className="kicker">{item ? "EDITAR" : "NUEVO REGISTRO"}</p><h2>{item ? "Editar" : "Agregar"} {labels[kind]}</h2></div><button type="button" onClick={close}><X /></button></header><div className="form-grid">
-    {kind === "member" && <><Field label="Nombre y apellido" name="name" value={values?.name} required wide /><Field label="Base" name="base" type="number" value={values?.base} /><Select label="Rol" name="role" value={values?.role} options={roles} /></>}
+    {kind === "member" && <><Field label="Nombre y apellido" name="name" value={values?.name} required wide /><Select label="Rol" name="role" value={values?.role} options={roles} /></>}
     {kind === "task" && <><Field label="Acción" name="title" value={values?.title} required wide /><Select label="Fase" name="phase" value={values?.phase} options={["1", "2", "3"]} /></>}
     {kind === "activity" && <><Field label="Nombre" name="name" value={values?.name} required wide /><Field label="Fecha" name="activity_date" type="date" value={values?.activity_date} required /><Field label="Barrio / lugar" name="place" value={values?.place} /><Field label="Asistentes" name="attendees" type="number" value={values?.attendees} /><Field label="Adherentes" name="adherents" type="number" value={values?.adherents} /><Select label="Estado" name="status" value={values?.status} options={["Planificada", "En curso", "Realizada"]} /></>}
     {kind === "contact" && <><Field label="Nombre" name="name" value={values?.name} required wide /><Select label="Tipo" name="type" value={values?.type} options={["Artista", "Espacio cultural", "Organización cultural", "AgrupaciÃ³n", "Colectividad", "Peña"]} /><Field label="Disciplina / actividad" name="discipline" value={values?.discipline} /><Field label="Barrio" name="neighborhood" value={values?.neighborhood} /><Field label="Dirección" name="address" value={values?.address} wide /><Field label="TelÃ©fono o contacto" name="phone" value={values?.phone} /><Field label="Latitud" name="latitude" type="number" step="any" value={values?.latitude} /><Field label="Longitud" name="longitude" type="number" step="any" value={values?.longitude} /><p className="field-help wide-field">Podés dejar latitud y longitud vacías y ubicar el registro directamente haciendo clic en el Mapa cultural.</p><label className="check"><input type="checkbox" name="sustained" defaultChecked={Boolean(values?.sustained)} /> Participación sostenida</label></>}

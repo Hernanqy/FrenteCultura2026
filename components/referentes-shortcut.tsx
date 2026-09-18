@@ -4,9 +4,9 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 const links = [
-  { href: "/referentes", label: "Referentes" },
-  { href: "/referentes/informe", label: "Informe de llamados" },
-  { href: "/espacios", label: "Espacios culturales" },
+  { href: "/referentes", label: "Referentes", short: "Referentes" },
+  { href: "/referentes/informe", label: "Informe de llamados", short: "Informe" },
+  { href: "/espacios", label: "Espacios culturales", short: "Espacios" },
 ];
 
 export function ReferentesShortcut() {
@@ -21,19 +21,19 @@ export function ReferentesShortcut() {
         aria-label="Volver atrás"
         style={{
           position: "fixed",
-          top: "18px",
-          left: "18px",
+          top: "14px",
+          left: "14px",
           zIndex: 1100,
-          width: "44px",
-          height: "44px",
+          width: "40px",
+          height: "40px",
           borderRadius: "50%",
           border: "1px solid #d8d4e5",
           background: "#ffffff",
           color: "#17182b",
-          fontSize: "23px",
+          fontSize: "21px",
           fontWeight: 800,
           cursor: "pointer",
-          boxShadow: "0 8px 22px rgba(0,0,0,.10)",
+          boxShadow: "0 6px 18px rgba(0,0,0,.10)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -47,20 +47,22 @@ export function ReferentesShortcut() {
         style={{
           position: "fixed",
           left: "50%",
-          bottom: "18px",
+          bottom: "10px",
           transform: "translateX(-50%)",
           zIndex: 1000,
           display: "flex",
           alignItems: "center",
-          gap: "5px",
-          padding: "7px",
-          background: "rgba(28,24,64,.94)",
+          gap: "4px",
+          padding: "5px",
+          background: "rgba(28,24,64,.96)",
           border: "1px solid rgba(255,255,255,.10)",
-          borderRadius: "17px",
-          boxShadow: "0 12px 36px rgba(20,16,50,.28)",
+          borderRadius: "15px",
+          boxShadow: "0 10px 28px rgba(20,16,50,.26)",
           backdropFilter: "blur(12px)",
-          maxWidth: "calc(100vw - 24px)",
+          maxWidth: "calc(100vw - 16px)",
           overflowX: "auto",
+          scrollbarWidth: "none",
+          WebkitOverflowScrolling: "touch",
         }}
       >
         {links.map((link) => {
@@ -73,25 +75,43 @@ export function ReferentesShortcut() {
             <Link
               key={link.href}
               href={link.href}
+              title={link.label}
               style={{
+                flex: "0 0 auto",
                 whiteSpace: "nowrap",
                 textDecoration: "none",
-                padding: "10px 15px",
-                borderRadius: "11px",
-                fontSize: "14px",
+                padding: "8px 11px",
+                borderRadius: "10px",
+                fontSize: "13px",
+                lineHeight: 1,
                 fontWeight: 750,
                 transition: "all .18s ease",
-                background: active
-                  ? "#6b4df6"
-                  : "transparent",
+                background: active ? "#6b4df6" : "transparent",
                 color: "#ffffff",
               }}
             >
-              {link.label}
+              <span className="nav-full">{link.label}</span>
+              <span className="nav-short">{link.short}</span>
             </Link>
           );
         })}
       </nav>
+
+      <style jsx global>{`
+        .nav-short {
+          display: none;
+        }
+
+        @media (max-width: 640px) {
+          .nav-full {
+            display: none;
+          }
+
+          .nav-short {
+            display: inline;
+          }
+        }
+      `}</style>
     </>
   );
 }

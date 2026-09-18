@@ -226,7 +226,7 @@ function HomeView({ members, tasks, activities, contacts, stats, toggleTask, nav
 }
 
 function TeamView({ members, edit, remove }: { members: Member[]; edit: (m: Member) => void; remove: (k: EntityKind, id: number) => void }) {
-  return <><Intro overline={String(members.length) + " INTEGRANTES"} title="DefiniciÃ³n de responsabilidades" /><div className="role-grid">{roles.slice(1).map((role) => <article key={role}><b>{role}</b><span>{members.filter((m) => m.role === role).length} designado(s)</span></article>)}</div><Table heads={["Integrante", "Rol asignado", ""]}>{members.map((m) => <tr key={m.id}><td><Avatar name={m.name} /> <b>{m.name}</b></td><td><span className="badge">{m.role}</span></td><td><Actions edit={() => edit(m)} remove={() => remove("member", m.id)} /></td></tr>)}</Table></>;
+  return <><Intro overline={String(members.length) + " INTEGRANTES"} title={"Definici\u00f3n de responsabilidades"} /><div className="role-grid">{roles.slice(1).map((role) => <article key={role}><b>{role}</b><span>{members.filter((m) => m.role === role).length} designado(s)</span></article>)}</div><Table heads={["Integrante", "Rol asignado", ""]}>{members.map((m) => <tr key={m.id}><td><Avatar name={m.name} /> <b>{m.name}</b></td><td><span className="badge">{m.role}</span></td><td><Actions edit={() => edit(m)} remove={() => remove("member", m.id)} /></td></tr>)}</Table></>;
 }
 
 function PlanView({ tasks, toggleTask, edit, remove }: { tasks: Task[]; toggleTask: (t: Task) => void; edit: (t: Task) => void; remove: (k: EntityKind, id: number) => void }) {

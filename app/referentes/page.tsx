@@ -475,6 +475,13 @@ export default function ReferentesPage() {
                 alignItems: "center",
                 padding: 17,
                 borderBottom: "1px solid #eeeaf5",
+                background: r.contactado
+                  ? "#f0faf3"
+                  : "#ffffff",
+                borderLeft: r.contactado
+                  ? "4px solid #36a65c"
+                  : "4px solid transparent",
+                transition: "background .2s ease, border-color .2s ease",
               }}
             >
               <div>
@@ -490,11 +497,54 @@ export default function ReferentesPage() {
               </div>
 
               <div>
-                {r.contactado ? "Contactado" : "Pendiente"}
+                <span
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 7,
+                    padding: "6px 10px",
+                    borderRadius: 999,
+                    fontSize: 13,
+                    fontWeight: 700,
+                    background: r.contactado
+                      ? "#dff4e5"
+                      : "#fff2d8",
+                    color: r.contactado
+                      ? "#176b35"
+                      : "#8a5a00",
+                  }}
+                >
+                  <span
+                    style={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: "50%",
+                      background: r.contactado
+                        ? "#36a65c"
+                        : "#e3a21a",
+                    }}
+                  />
+                  {r.contactado ? "Contactado" : "Pendiente"}
+                </span>
               </div>
 
               <button
                 onClick={() => setEditando(r)}
+                style={{
+                  padding: "9px 13px",
+                  borderRadius: 9,
+                  border: r.contactado
+                    ? "1px solid #36a65c"
+                    : "1px solid #6045e8",
+                  background: r.contactado
+                    ? "#ffffff"
+                    : "#6045e8",
+                  color: r.contactado
+                    ? "#176b35"
+                    : "#ffffff",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                }}
               >
                 {r.contactado
                   ? "Ver / editar"

@@ -368,6 +368,7 @@ export default function EspaciosPage() {
 
   return (
     <main
+      className="espacios-page"
       style={{
         maxWidth: 1500,
         margin: "0 auto",
@@ -376,6 +377,7 @@ export default function EspaciosPage() {
       }}
     >
       <header
+        className="espacios-header"
         style={{
           display: "flex",
           justifyContent: "space-between",
@@ -411,6 +413,7 @@ export default function EspaciosPage() {
         </div>
 
         <div
+          className="espacios-actions"
           style={{
             display: "flex",
             gap: 10
@@ -484,6 +487,7 @@ export default function EspaciosPage() {
       )}
 
       <section
+        className="espacios-metrics"
         style={{
           display: "grid",
           gridTemplateColumns:
@@ -522,6 +526,7 @@ export default function EspaciosPage() {
       />
 
       <section
+        className="espacios-list"
         style={{
           background: "#fff",
           border: "1px solid #ddd9e8",
@@ -541,6 +546,7 @@ export default function EspaciosPage() {
           filtrados.map((item) => (
             <div
               key={item.id}
+              className="espacio-row"
               style={{
                 display: "grid",
                 gridTemplateColumns:
@@ -597,6 +603,7 @@ export default function EspaciosPage() {
 
       {mostrarNuevo && (
         <div
+          className="espacio-modal-backdrop"
           style={{
             position: "fixed",
             inset: 0,
@@ -609,6 +616,7 @@ export default function EspaciosPage() {
           }}
         >
           <form
+            className="espacio-modal-form"
             onSubmit={guardarManual}
             style={{
               width: "min(760px,100%)",

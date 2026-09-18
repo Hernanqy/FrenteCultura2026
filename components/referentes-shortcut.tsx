@@ -16,6 +16,7 @@ export function ReferentesShortcut() {
   return (
     <>
       <button
+        className="global-back-button"
         type="button"
         onClick={() => router.back()}
         aria-label="Volver atrás"
@@ -43,6 +44,7 @@ export function ReferentesShortcut() {
       </button>
 
       <nav
+        className="global-quick-nav"
         aria-label="Navegación principal"
         style={{
           position: "fixed",

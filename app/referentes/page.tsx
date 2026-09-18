@@ -313,6 +313,7 @@ export default function ReferentesPage() {
 
   return (
     <main
+      className="referentes-page"
       style={{
         maxWidth: 1450,
         margin: "0 auto",
@@ -320,6 +321,7 @@ export default function ReferentesPage() {
       }}
     >
       <header
+        className="referentes-header"
         style={{
           display: "flex",
           justifyContent: "space-between",
@@ -405,6 +407,7 @@ export default function ReferentesPage() {
       )}
 
       <section
+        className="referentes-metrics"
         style={{
           display: "grid",
           gridTemplateColumns:
@@ -437,6 +440,7 @@ export default function ReferentesPage() {
       </section>
 
       <div
+        className="referentes-filters"
         style={{
           display: "flex",
           gap: 12,
@@ -471,6 +475,7 @@ export default function ReferentesPage() {
       </div>
 
       <section
+        className="referentes-list"
         style={{
           background: "white",
           border: "1px solid #ddd9e8",
@@ -486,6 +491,7 @@ export default function ReferentesPage() {
           filtrados.map((r) => (
             <div
               key={r.id}
+              className="referente-row"
               style={{
                 display: "grid",
                 gridTemplateColumns:
@@ -576,6 +582,7 @@ export default function ReferentesPage() {
 
       {editando && (
         <div
+          className="referente-modal-backdrop"
           style={{
             position: "fixed",
             inset: 0,
@@ -587,6 +594,7 @@ export default function ReferentesPage() {
           }}
         >
           <form
+            className="referente-modal-form"
             onSubmit={guardar}
             style={{
               background: "white",
@@ -637,6 +645,7 @@ export default function ReferentesPage() {
             </p>
 
             <fieldset
+              className="resultado-fieldset"
               style={{
                 border: "1px solid #ddd9e8",
                 borderRadius: 10,

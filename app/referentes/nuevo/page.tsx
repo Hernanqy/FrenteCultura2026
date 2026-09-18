@@ -67,6 +67,7 @@ export default function NuevoReferentePage() {
 
   return (
     <main
+      className="nuevo-referente-page"
       style={{
         maxWidth: 850,
         margin: "0 auto",
@@ -114,6 +115,7 @@ export default function NuevoReferentePage() {
       )}
 
       <form
+        className="nuevo-referente-form"
         onSubmit={guardar}
         style={{
           background: "#ffffff",
@@ -168,6 +170,7 @@ export default function NuevoReferentePage() {
         </label>
 
         <div
+          className="nuevo-referente-actions"
           style={{
             display: "flex",
             justifyContent: "flex-end",

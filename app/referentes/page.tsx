@@ -15,6 +15,7 @@ type Referente = {
   que_dijo: string | null;
   informacion_brindada: string | null;
   seguimiento: string | null;
+  resultado_llamada: string | null;
 };
 
 export default function ReferentesPage() {
@@ -239,6 +240,8 @@ export default function ReferentesPage() {
         String(form.get("informacion_brindada") || "") || null,
       seguimiento:
         String(form.get("seguimiento") || "") || null,
+      resultado_llamada:
+        String(form.get("resultado_llamada") || "") || null,
     };
 
     const { error } = await supabase
@@ -563,6 +566,56 @@ export default function ReferentesPage() {
                 style={{ width: "100%" }}
               />
             </p>
+
+            <fieldset
+              style={{
+                border: "1px solid #ddd9e8",
+                borderRadius: 10,
+                padding: 14,
+                marginBottom: 16
+              }}
+            >
+              <legend style={{ fontWeight: 700 }}>
+                Resultado del llamado
+              </legend>
+
+              <label style={{ marginRight: 18 }}>
+                <input
+                  type="radio"
+                  name="resultado_llamada"
+                  value="positivo"
+                  defaultChecked={
+                    editando.resultado_llamada === "positivo"
+                  }
+                />{" "}
+                Positivo
+              </label>
+
+              <label style={{ marginRight: 18 }}>
+                <input
+                  type="radio"
+                  name="resultado_llamada"
+                  value="neutral"
+                  defaultChecked={
+                    editando.resultado_llamada === "neutral"
+                  }
+                />{" "}
+                Neutral
+              </label>
+
+              <label>
+                <input
+                  type="radio"
+                  name="resultado_llamada"
+                  value="negativo"
+                  defaultChecked={
+                    editando.resultado_llamada === "negativo"
+                  }
+                />{" "}
+                Negativo
+              </label>
+            </fieldset>
+
 
             <p>
               Seguimiento / próximo paso

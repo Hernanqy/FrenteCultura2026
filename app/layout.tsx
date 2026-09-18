@@ -1,4 +1,5 @@
-import { ReferentesShortcut } from "@/components/referentes-shortcut";\nimport "leaflet/dist/leaflet.css";
+import { ReferentesShortcut } from "@/components/referentes-shortcut";
+import "leaflet/dist/leaflet.css";
 import type { Metadata } from "next";
 import "./globals.css";
 

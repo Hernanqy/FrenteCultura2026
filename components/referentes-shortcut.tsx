@@ -2,89 +2,64 @@
 
 import Link from "next/link";
 
+const base = {
+  display: "inline-flex",
+  alignItems: "center",
+  gap: "9px",
+  textDecoration: "none",
+  padding: "12px 16px",
+  borderRadius: "13px",
+  fontWeight: 800,
+  boxShadow: "0 8px 24px rgba(0,0,0,.14)",
+};
+
 export function ReferentesShortcut() {
   return (
     <div
       style={{
         position: "fixed",
-        right: "24px",
-        bottom: "24px",
+        right: 24,
+        bottom: 24,
         zIndex: 1000,
         display: "flex",
         flexDirection: "column",
-        gap: "10px",
         alignItems: "flex-end",
+        gap: 9,
       }}
     >
       <Link
-        href="/referentes/informe"
-        aria-label="Abrir informe de llamados"
+        href="/referentes/nuevo"
         style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "10px",
+          ...base,
           background: "#ffffff",
-          color: "#0b1230",
-          textDecoration: "none",
-          padding: "13px 17px",
-          borderRadius: "14px",
-          fontWeight: 800,
-          fontSize: "14px",
-          border: "1px solid #ddd9e8",
-          boxShadow: "0 8px 24px rgba(0,0,0,.12)",
+          color: "#6045e8",
+          border: "1px solid #6045e8",
         }}
       >
-        <span
-          aria-hidden="true"
-          style={{
-            width: "28px",
-            height: "28px",
-            borderRadius: "50%",
-            background: "#f1efff",
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          📊
-        </span>
+        + Nuevo referente
+      </Link>
 
+      <Link
+        href="/referentes/informe"
+        style={{
+          ...base,
+          background: "#ffffff",
+          color: "#0b1230",
+          border: "1px solid #ddd9e8",
+        }}
+      >
         Informe de llamados
       </Link>
 
       <Link
         href="/referentes"
-        aria-label="Abrir referentes"
         style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "10px",
+          ...base,
           background: "#6045e8",
           color: "#ffffff",
-          textDecoration: "none",
-          padding: "14px 18px",
-          borderRadius: "14px",
-          fontWeight: 800,
-          fontSize: "15px",
-          boxShadow: "0 10px 28px rgba(0,0,0,.18)",
-          border: "1px solid rgba(255,255,255,.18)",
+          border: "1px solid #6045e8",
         }}
       >
-        <span
-          aria-hidden="true"
-          style={{
-            width: "28px",
-            height: "28px",
-            borderRadius: "50%",
-            background: "rgba(255,255,255,.16)",
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          👥
-        </span>
-
         Referentes
       </Link>
     </div>

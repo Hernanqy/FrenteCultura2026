@@ -227,6 +227,7 @@ export default function ReferentesPage() {
     if (!editando) return;
 
     setGuardando(true);
+    setMensaje("Guardando cambios...");
 
     const form = new FormData(e.currentTarget);
 
@@ -242,22 +243,40 @@ export default function ReferentesPage() {
         String(form.get("seguimiento") || "") || null,
       resultado_llamada:
         String(form.get("resultado_llamada") || "") || null,
+      updated_at: new Date().toISOString(),
     };
 
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from("referentes")
       .update(cambios)
-      .eq("id", editando.id);
+      .eq("id", editando.id)
+      .select("*")
+      .single();
 
     setGuardando(false);
 
     if (error) {
-      setMensaje("Error guardando: " + error.message);
+      console.error("Error guardando referente:", error);
+      setMensaje("ERROR: " + error.message);
       return;
     }
 
+    if (!data) {
+      setMensaje("ERROR: Supabase no devolvio el registro actualizado.");
+      return;
+    }
+
+    setItems((actual) =>
+      actual.map((r) =>
+        r.id === data.id ? data as Referente : r
+      )
+    );
+
     setEditando(null);
-    await cargar();
+
+    setMensaje(
+      "Cambios guardados correctamente para " + data.nombre + "."
+    );
   }
 
   const filtrados = useMemo(() => {

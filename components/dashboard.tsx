@@ -27,9 +27,9 @@ const WORKSPACE_ID = "00000000-0000-4000-8000-000000000001";
 const phases = {
   1: { name: "Constitución", dates: "Oct. y nov. 2026" },
   2: { name: "Despliegue", dates: "Dic. 2026 a mar. 2027" },
-  3: { name: "MasificaciÃ³n", dates: "Abr. a jul. 2027" },
+  3: { name: "Masificación", dates: "Abr. a jul. 2027" },
 };
-const roles = ["Sin designar", "CoordinaciÃ³n", "Co-coordinaciÃ³n", "Enlace OrganizaciÃ³n", "Enlace FormaciÃ³n", "Enlace ComunicaciÃ³n", "Responsable de Registro"];
+const roles = ["Sin designar", "Coordinación", "Co-coordinaciÃ³n", "Enlace Organización", "Enlace Formación", "Enlace Comunicación", "Responsable de Registro"];
 
 export function Dashboard({ userEmail }: { userEmail: string }) {
   const [view, setView] = useState<View>("inicio");
@@ -100,13 +100,13 @@ export function Dashboard({ userEmail }: { userEmail: string }) {
   }
 
   const addKind: EntityKind = view === "equipo" ? "member" : view === "plan" ? "task" : view === "actividades" ? "activity" : "contact";
-  const addLabel = { member: "Integrante", task: "AcciÃ³n", activity: "Actividad", contact: "Contacto" }[addKind];
+  const addLabel = { member: "Integrante", task: "Acción", activity: "Actividad", contact: "Contacto" }[addKind];
   const filteredContacts = contacts.filter((c) => [c.name, c.type, c.discipline, c.neighborhood].join(" ").toLowerCase().includes(search.toLowerCase()));
 
   return (
     <div className="app-shell">
       <aside className={"sidebar " + (menuOpen ? "open" : "")}>
-        <div className="brand"><span className="brand-mark">FC</span><div><strong>Frente Cultura</strong><small>OrganizaciÃ³n y seguimiento</small></div></div>
+        <div className="brand"><span className="brand-mark">FC</span><div><strong>Frente Cultura</strong><small>Organización y seguimiento</small></div></div>
         <nav>
           <Nav active={view === "inicio"} icon={<Home />} label="Inicio" onClick={() => { setView("inicio"); setMenuOpen(false); }} />
           <Nav active={view === "equipo"} icon={<UsersRound />} label="Equipo y roles" onClick={() => { setView("equipo"); setMenuOpen(false); }} />
@@ -163,7 +163,7 @@ function HomeView({ members, tasks, activities, contacts, stats, toggleTask, nav
     { view: "actividades", title: "Actividades", detail: "Agenda, asistencia y adherentes", value: `${activities.length} cargadas`, icon: <CalendarDays /> },
     { view: "registro", title: "Registro cultural", detail: "Artistas, espacios y organizaciones", value: `${contacts.length} mapeados`, icon: <ContactRound /> },
     { view: "indicadores", title: "Indicadores", detail: "Metas y evolución del trabajo", value: `${stats.adherents} adherentes`, icon: <ChartNoAxesCombined /> },
-    { view: "mapa", title: "Mapa cultural", detail: "Organizaciones culturales de OlavarrÃ­a", value: `${contacts.length} registros`, icon: <MapPinned /> },
+    { view: "mapa", title: "Mapa cultural", detail: "Organizaciones culturales de Olavarría", value: `${contacts.length} registros`, icon: <MapPinned /> },
   ];
 
   return <>
@@ -175,7 +175,7 @@ function HomeView({ members, tasks, activities, contacts, stats, toggleTask, nav
       </div>
     </section>
 
-    <section className="section-menu" aria-label="Secciones de la aplicaciÃ³n">
+    <section className="section-menu" aria-label="Secciones de la aplicación">
       {sections.map((section) => (
         <button className="section-card" key={section.view} onClick={() => navigate(section.view)}>
           <span className="section-icon">{section.icon}</span>
@@ -193,7 +193,7 @@ function HomeView({ members, tasks, activities, contacts, stats, toggleTask, nav
     <section className="metrics-grid"><Metric label="Integrantes" value={members.length} detail="Equipo inicial" /><Metric label="Mapeados" value={contacts.length} detail="Meta: 40 a noviembre" /><Metric label="Actividades" value={activities.length} detail="Meta: una por mes" /><Metric label="Adherentes" value={stats.adherents} detail="Meta: 150 a julio" /></section>
     <section className="grid-2">
       <article className="panel"><p className="kicker">PRÃ“XIMOS PASOS</p><h2>Acciones prioritarias</h2>{phaseOne.filter((t) => !t.done).map((t) => <label className="task-row" key={t.id}><input type="checkbox" checked={t.done} onChange={() => toggleTask(t)} /><span><b>{t.title}</b><small>Fase 1 Â· Constitución</small></span></label>)}</article>
-      <article className="panel"><p className="kicker">AGENDA</p><h2>PrÃ³ximas actividades</h2>{activities.map((a) => <div className="event-row" key={a.id}><time>{new Date(a.activity_date + "T12:00:00").getDate()}<small>{new Date(a.activity_date + "T12:00:00").toLocaleDateString("es-AR", { month: "short" }).replace(".", "")}</small></time><span><b>{a.name}</b><small>{a.place} Â· {a.status}</small></span></div>)}</article>
+      <article className="panel"><p className="kicker">AGENDA</p><h2>Próximas actividades</h2>{activities.map((a) => <div className="event-row" key={a.id}><time>{new Date(a.activity_date + "T12:00:00").getDate()}<small>{new Date(a.activity_date + "T12:00:00").toLocaleDateString("es-AR", { month: "short" }).replace(".", "")}</small></time><span><b>{a.name}</b><small>{a.place} Â· {a.status}</small></span></div>)}</article>
     </section>
   </>;
 }
@@ -211,18 +211,18 @@ function ActivitiesView({ activities, edit, remove }: { activities: Activity[]; 
 }
 
 function RegistryView({ contacts, search, setSearch, edit, remove }: { contacts: Contact[]; search: string; setSearch: (v: string) => void; edit: (c: Contact) => void; remove: (k: EntityKind, id: number) => void }) {
-  return <><Intro overline="ARTISTAS, ESPACIOS, AGRUPACIONES Y COLECTIVIDADES" title="Registro cultural" /><div className="search-box"><Search /><input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar por nombre, disciplina o barrioâ€¦" /></div><div className="contact-grid">{contacts.length ? contacts.map((c) => <article className="contact-card" key={c.id}><header><div><h3>{c.name}</h3><span className="badge">{c.type}</span></div><Actions edit={() => edit(c)} remove={() => remove("contact", c.id)} compact /></header><p><b>{c.discipline || "Actividad sin especificar"}</b></p><p>{[c.address, c.neighborhood].filter(Boolean).join(" Â· ") || "UbicaciÃ³n sin especificar"}</p><footer>{c.phone || "Sin telÃ©fono"}{c.sustained && <span className="badge green">ParticipaciÃ³n sostenida</span>}</footer></article>) : <div className="panel empty">TodavÃ­a no hay contactos cargados.</div>}</div></>;
+  return <><Intro overline="ARTISTAS, ESPACIOS, AGRUPACIONES Y COLECTIVIDADES" title="Registro cultural" /><div className="search-box"><Search /><input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar por nombre, disciplina o barrioâ€¦" /></div><div className="contact-grid">{contacts.length ? contacts.map((c) => <article className="contact-card" key={c.id}><header><div><h3>{c.name}</h3><span className="badge">{c.type}</span></div><Actions edit={() => edit(c)} remove={() => remove("contact", c.id)} compact /></header><p><b>{c.discipline || "Actividad sin especificar"}</b></p><p>{[c.address, c.neighborhood].filter(Boolean).join(" Â· ") || "Ubicación sin especificar"}</p><footer>{c.phone || "Sin teléfono"}{c.sustained && <span className="badge green">Participación sostenida</span>}</footer></article>) : <div className="panel empty">TodavÃ­a no hay contactos cargados.</div>}</div></>;
 }
 
 function IndicatorsView({ stats, activities, contacts }: { stats: { mapped: number; attendees: number; adherents: number; completed: number }; activities: Activity[]; contacts: Contact[] }) {
   const sustained = contacts.filter((c) => c.sustained).length;
   const goals: [string, number, number][] = [["Artistas y espacios mapeados", stats.mapped, 40], ["Adherentes fichados", stats.adherents, 150], ["Actividades realizadas", activities.filter((a) => a.status === "Realizada").length, 10]];
-  return <><Intro overline="RESULTADOS Y METAS ACUMULADAS" title="Indicadores" /><section className="metrics-grid"><Metric label="Asistentes" value={stats.attendees} detail="Total acumulado" /><Metric label="Adherentes" value={stats.adherents} detail="Contactos convertidos" /><Metric label="ConversiÃ³n" value={stats.attendees ? String(Math.round(stats.adherents / stats.attendees * 100)) + "%" : "0%"} detail="Adherentes / asistentes" /><Metric label="ParticipaciÃ³n sostenida" value={sustained} detail="Espacios y organizaciones" /></section><article className="panel goals"><p className="kicker">AVANCE DE METAS</p><h2>Objetivos a julio de 2027</h2>{goals.map(([label, value, target]) => <div className="goal" key={label}><div><b>{label}</b><span>{value} / {target}</span></div><progress value={value} max={target} /></div>)}</article></>;
+  return <><Intro overline="RESULTADOS Y METAS ACUMULADAS" title="Indicadores" /><section className="metrics-grid"><Metric label="Asistentes" value={stats.attendees} detail="Total acumulado" /><Metric label="Adherentes" value={stats.adherents} detail="Contactos convertidos" /><Metric label="Conversión" value={stats.attendees ? String(Math.round(stats.adherents / stats.attendees * 100)) + "%" : "0%"} detail="Adherentes / asistentes" /><Metric label="Participación sostenida" value={sustained} detail="Espacios y organizaciones" /></section><article className="panel goals"><p className="kicker">AVANCE DE METAS</p><h2>Objetivos a julio de 2027</h2>{goals.map(([label, value, target]) => <div className="goal" key={label}><div><b>{label}</b><span>{value} / {target}</span></div><progress value={value} max={target} /></div>)}</article></>;
 }
 
 function MapView({ contacts, reload, error }: { contacts: Contact[]; reload: () => void; error: (message: string) => void }) {
   return <>
-    <Intro overline="MAPA TERRITORIAL" title="Mapa cultural de OlavarrÃ­a" />
+    <Intro overline="MAPA TERRITORIAL" title="Mapa cultural de Olavarría" />
     <CulturalMap contacts={contacts} onChanged={reload} onError={error} />
   </>;
 }
@@ -246,7 +246,7 @@ function Actions({ edit, remove }: { edit: () => void; remove: () => void; compa
 function Editor({ kind, item, close, saved, error }: { kind: EntityKind; item?: Entity; close: () => void; saved: () => void; error: (message: string) => void }) {
   const [busy, setBusy] = useState(false);
   const values = item as unknown as Record<string, string | number | boolean | null> | undefined;
-  const labels = { member: "integrante", task: "acciÃ³n", activity: "actividad", contact: "contacto" };
+  const labels = { member: "integrante", task: "acción", activity: "actividad", contact: "contacto" };
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setBusy(true);
@@ -274,9 +274,9 @@ function Editor({ kind, item, close, saved, error }: { kind: EntityKind; item?: 
   }
   return <div className="modal-backdrop" onMouseDown={(e) => { if (e.target === e.currentTarget) close(); }}><form className="editor" onSubmit={submit}><header><div><p className="kicker">{item ? "EDITAR" : "NUEVO REGISTRO"}</p><h2>{item ? "Editar" : "Agregar"} {labels[kind]}</h2></div><button type="button" onClick={close}><X /></button></header><div className="form-grid">
     {kind === "member" && <><Field label="Nombre y apellido" name="name" value={values?.name} required wide /><Field label="Base" name="base" type="number" value={values?.base} /><Select label="Rol" name="role" value={values?.role} options={roles} /></>}
-    {kind === "task" && <><Field label="AcciÃ³n" name="title" value={values?.title} required wide /><Select label="Fase" name="phase" value={values?.phase} options={["1", "2", "3"]} /></>}
+    {kind === "task" && <><Field label="Acción" name="title" value={values?.title} required wide /><Select label="Fase" name="phase" value={values?.phase} options={["1", "2", "3"]} /></>}
     {kind === "activity" && <><Field label="Nombre" name="name" value={values?.name} required wide /><Field label="Fecha" name="activity_date" type="date" value={values?.activity_date} required /><Field label="Barrio / lugar" name="place" value={values?.place} /><Field label="Asistentes" name="attendees" type="number" value={values?.attendees} /><Field label="Adherentes" name="adherents" type="number" value={values?.adherents} /><Select label="Estado" name="status" value={values?.status} options={["Planificada", "En curso", "Realizada"]} /></>}
-    {kind === "contact" && <><Field label="Nombre" name="name" value={values?.name} required wide /><Select label="Tipo" name="type" value={values?.type} options={["Artista", "Espacio cultural", "OrganizaciÃ³n cultural", "AgrupaciÃ³n", "Colectividad", "PeÃ±a"]} /><Field label="Disciplina / actividad" name="discipline" value={values?.discipline} /><Field label="Barrio" name="neighborhood" value={values?.neighborhood} /><Field label="DirecciÃ³n" name="address" value={values?.address} wide /><Field label="TelÃ©fono o contacto" name="phone" value={values?.phone} /><Field label="Latitud" name="latitude" type="number" step="any" value={values?.latitude} /><Field label="Longitud" name="longitude" type="number" step="any" value={values?.longitude} /><p className="field-help wide-field">PodÃ©s dejar latitud y longitud vacÃ­as y ubicar el registro directamente haciendo clic en el Mapa cultural.</p><label className="check"><input type="checkbox" name="sustained" defaultChecked={Boolean(values?.sustained)} /> ParticipaciÃ³n sostenida</label></>}
+    {kind === "contact" && <><Field label="Nombre" name="name" value={values?.name} required wide /><Select label="Tipo" name="type" value={values?.type} options={["Artista", "Espacio cultural", "Organización cultural", "AgrupaciÃ³n", "Colectividad", "Peña"]} /><Field label="Disciplina / actividad" name="discipline" value={values?.discipline} /><Field label="Barrio" name="neighborhood" value={values?.neighborhood} /><Field label="Dirección" name="address" value={values?.address} wide /><Field label="TelÃ©fono o contacto" name="phone" value={values?.phone} /><Field label="Latitud" name="latitude" type="number" step="any" value={values?.latitude} /><Field label="Longitud" name="longitude" type="number" step="any" value={values?.longitude} /><p className="field-help wide-field">Podés dejar latitud y longitud vacías y ubicar el registro directamente haciendo clic en el Mapa cultural.</p><label className="check"><input type="checkbox" name="sustained" defaultChecked={Boolean(values?.sustained)} /> Participación sostenida</label></>}
   </div><footer><button className="secondary" type="button" onClick={close}>Cancelar</button><button className="primary" disabled={busy}>{busy ? "Guardandoâ€¦" : "Guardar"}</button></footer></form></div>;
 }
 

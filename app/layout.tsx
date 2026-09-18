@@ -1,4 +1,4 @@
-import "leaflet/dist/leaflet.css";
+import { ReferentesShortcut } from "@/components/referentes-shortcut";\nimport "leaflet/dist/leaflet.css";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body>{children}  <ReferentesShortcut />\n      </body>
     </html>
   );
 }

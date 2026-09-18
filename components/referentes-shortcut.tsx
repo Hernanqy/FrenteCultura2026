@@ -13,12 +13,29 @@ export function ReferentesShortcut() {
   const pathname = usePathname();
   const router = useRouter();
 
+  function volver() {
+    const rutaActual = window.location.pathname;
+
+    if (window.history.length <= 1) {
+      router.push("/");
+      return;
+    }
+
+    router.back();
+
+    window.setTimeout(() => {
+      if (window.location.pathname === rutaActual) {
+        router.push("/");
+      }
+    }, 350);
+  }
+
   return (
     <>
       <button
         className="global-back-button"
         type="button"
-        onClick={() => router.back()}
+        onClick={volver}
         aria-label="Volver atrás"
         style={{
           position: "fixed",

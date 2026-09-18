@@ -1,67 +1,97 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
-const base = {
-  display: "inline-flex",
-  alignItems: "center",
-  gap: "9px",
-  textDecoration: "none",
-  padding: "12px 16px",
-  borderRadius: "13px",
-  fontWeight: 800,
-  boxShadow: "0 8px 24px rgba(0,0,0,.14)",
-};
+const links = [
+  { href: "/referentes", label: "Referentes" },
+  { href: "/referentes/informe", label: "Informe de llamados" },
+  { href: "/espacios", label: "Espacios culturales" },
+];
 
 export function ReferentesShortcut() {
+  const pathname = usePathname();
+  const router = useRouter();
+
   return (
-    <div
-      style={{
-        position: "fixed",
-        right: 24,
-        bottom: 24,
-        zIndex: 1000,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-end",
-        gap: 9,
-      }}
-    >
-      <Link
-        href="/referentes/nuevo"
+    <>
+      <button
+        type="button"
+        onClick={() => router.back()}
+        aria-label="Volver atrás"
         style={{
-          ...base,
+          position: "fixed",
+          top: "18px",
+          left: "18px",
+          zIndex: 1100,
+          width: "44px",
+          height: "44px",
+          borderRadius: "50%",
+          border: "1px solid #d8d4e5",
           background: "#ffffff",
-          color: "#6045e8",
-          border: "1px solid #6045e8",
+          color: "#17182b",
+          fontSize: "23px",
+          fontWeight: 800,
+          cursor: "pointer",
+          boxShadow: "0 8px 22px rgba(0,0,0,.10)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
-        + Nuevo referente
-      </Link>
+        ←
+      </button>
 
-      <Link
-        href="/referentes/informe"
+      <nav
+        aria-label="Navegación principal"
         style={{
-          ...base,
-          background: "#ffffff",
-          color: "#0b1230",
-          border: "1px solid #ddd9e8",
+          position: "fixed",
+          left: "50%",
+          bottom: "18px",
+          transform: "translateX(-50%)",
+          zIndex: 1000,
+          display: "flex",
+          alignItems: "center",
+          gap: "5px",
+          padding: "7px",
+          background: "rgba(28,24,64,.94)",
+          border: "1px solid rgba(255,255,255,.10)",
+          borderRadius: "17px",
+          boxShadow: "0 12px 36px rgba(20,16,50,.28)",
+          backdropFilter: "blur(12px)",
+          maxWidth: "calc(100vw - 24px)",
+          overflowX: "auto",
         }}
       >
-        Informe de llamados
-      </Link>
+        {links.map((link) => {
+          const active =
+            link.href === "/referentes"
+              ? pathname === "/referentes"
+              : pathname.startsWith(link.href);
 
-      <Link
-        href="/referentes"
-        style={{
-          ...base,
-          background: "#6045e8",
-          color: "#ffffff",
-          border: "1px solid #6045e8",
-        }}
-      >
-        Referentes
-      </Link>
-    </div>
+          return (
+            <Link
+              key={link.href}
+              href={link.href}
+              style={{
+                whiteSpace: "nowrap",
+                textDecoration: "none",
+                padding: "10px 15px",
+                borderRadius: "11px",
+                fontSize: "14px",
+                fontWeight: 750,
+                transition: "all .18s ease",
+                background: active
+                  ? "#6b4df6"
+                  : "transparent",
+                color: "#ffffff",
+              }}
+            >
+              {link.label}
+            </Link>
+          );
+        })}
+      </nav>
+    </>
   );
 }
